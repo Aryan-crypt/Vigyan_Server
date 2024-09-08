@@ -8,7 +8,7 @@ genai.configure(api_key=api_key)
 app = Flask(__name__)
 
 # Create a client instance for the Generative AI model
-client = genai.Client()  # Use the correct client or model initialization according to the library
+client = genai.Client(gemini-1.5-pro-latest)  # Use the correct client or model initialization according to the library
 
 # Set up the model configuration
 generation_config = {
