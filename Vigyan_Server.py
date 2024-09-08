@@ -7,23 +7,9 @@ genai.configure(api_key=api_key)
 
 app = Flask(__name__)
 
-# Create a client instance for the Generative AI model
-client = genai.Client(gemini-1.5-pro-latest)  # Use the correct client or model initialization according to the library
-
-# Set up the model configuration
-generation_config = {
-    "temperature": 1,
-    "top_p": 0.95,
-    "top_k": 0,
-    "max_output_tokens": 100,
-}
-
-safety_settings = [
-    {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
-    {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
-    {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
-    {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"},
-]
+# Initialize the client or service
+# Replace with the correct initialization method as per library documentation
+model_name = "gemini-1.5-pro-latest"
 
 @app.route('/chat', methods=['POST'])
 def chat():
@@ -34,12 +20,21 @@ def chat():
         if not user_message:
             return jsonify({"error": "No message provided"}), 400
 
-        # Generate AI response using the client
-        response = client.generate_response(
+        # Generate AI response
+        # Replace 'generate_response' with the actual method provided by the library
+        response = genai.generate_response(
+            model_name=model_name,
             prompt=user_message,
-            model_name="gemini-1.5-pro-latest",
-            generation_config=generation_config,
-            safety_settings=safety_settings
+            temperature=1,
+            top_p=0.95,
+            top_k=0,
+            max_output_tokens=100,
+            safety_settings=[
+                {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
+                {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"}
+            ]
         )
 
         # Return the AI response
